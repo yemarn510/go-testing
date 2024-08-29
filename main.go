@@ -1,21 +1,23 @@
 package main
 
 import (
-	"./models"
+	"test/controllers"
+
+	"test/models"
 
 	"github.com/gin-gonic/gin"
 )
-
-type CreatePostInput struct {
-	Title string `json:"title" binding:"required"`
-	Content string `json:"content" binding:"required"`
-}
-
 
 func main() {
 	router := gin.Default()
 
 	models.ConnectDatabase()
+
+	router.POST("/posts", controllers.Create)
+	router.GET("/posts", controllers.Get)
+	router.GET("/posts/:id", controllers.GetDetail)
+	router.PATCH("/posts/:id", controllers.Update)
+	router.DELETE("/posts/:id", controllers.Delete)
 
 	router.Run("localhost:8080")
 }
